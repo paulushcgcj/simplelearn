@@ -1,19 +1,45 @@
 {
-  "name": "frontend",
+  "name": "simple-accelerator-frontend",
+  "description": "A simple accelerator for small companies",
   "private": true,
   "version": "0.0.0",
   "type": "module",
+  "repository": {
+    "type": "git",
+    "url": "git+git@github.com:paulushcgcj/simplelearn.git"
+  },
+  "author": "Paulo Gomes da Cruz Jr",
+  "license": "Apache-2.0",
+  "keywords": [
+    "learning",
+    "vue",
+    "vite",
+    "typescript",
+    "vue3",
+    "vue-router"
+  ],
+  "bugs": {
+    "url": "https://github.com/paulushcgcj/simplelearn/issues"
+  },
+  "homepage": "https://github.com/paulushcgcj/simplelearn#readme",
   "scripts": {
-    "dev": "vite",
-    "build": "vue-tsc -b && vite build",
-    "preview": "vite preview"
+    "dev": "vite --host",
+    "build": "vue-tsc -b --noEmit && vite build",
+    "lint": "eslint 'src/**/*.{ts,tsx,vue}'",
+    "format": "prettier --write 'src/**/*.{ts,tsx,vue,css,scss,md}'"
   },
   "dependencies": {
     "vue": "^3.4.31",
     "vue-router": "^4.4.0"
   },
   "devDependencies": {
+    "@types/node": "^20.14.12",
     "@vitejs/plugin-vue": "^5.0.5",
+    "@vue/eslint-config-prettier": "^9.0.0",
+    "@vue/eslint-config-typescript": "^13.0.0",
+    "eslint": "^8.57.0",
+    "eslint-plugin-vue": "^9.27.0",
+    "prettier": "^3.3.3",
     "typescript": "^5.2.2",
     "vite": "^5.3.4",
     "vue-tsc": "^2.0.24"
