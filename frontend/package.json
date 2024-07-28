@@ -26,19 +26,23 @@
     "dev": "vite --host",
     "build": "vue-tsc -b --noEmit && vite build",
     "lint": "eslint 'src/**/*.{ts,tsx,vue}'",
-    "format": "prettier --write 'src/**/*.{ts,tsx,vue,css,scss,md}'"
+    "format": "prettier --write 'src/**/*.{ts,tsx,vue,css,scss,md}'",
+    "prepare": "cd .. && husky frontend/.husky || true"
   },
   "dependencies": {
     "vue": "^3.4.31",
     "vue-router": "^4.4.0"
   },
   "devDependencies": {
+    "@commitlint/cli": "^19.3.0",
+    "@commitlint/config-conventional": "^19.2.2",
     "@types/node": "^20.14.12",
     "@vitejs/plugin-vue": "^5.0.5",
     "@vue/eslint-config-prettier": "^9.0.0",
     "@vue/eslint-config-typescript": "^13.0.0",
     "eslint": "^8.57.0",
     "eslint-plugin-vue": "^9.27.0",
+    "husky": "^9.1.3",
     "prettier": "^3.3.3",
     "typescript": "^5.2.2",
     "vite": "^5.3.4",
