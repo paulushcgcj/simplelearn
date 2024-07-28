@@ -33,7 +33,7 @@
 import { ref, onMounted, watch } from 'vue'
 import { useRouter } from 'vue-router'
 
-import { Company, Page } from '@/dtos/Company'
+import type { Company, Page } from '@/dtos/Company'
 import { getCompanies, removeCompany } from '@/services/companyService'
 import PaginationComponent from '@/components/AppPaginator.vue'
 
@@ -47,7 +47,7 @@ const totalEntries = ref<number>(0)
 const router = useRouter()
 
 const loadCompanies = () => {
-  const pageResult = getCompanies(props.page, props.size)
+  const pageResult: Page<Company> = getCompanies(props.page, props.size)
   companies.value = pageResult.content
   totalEntries.value = pageResult.total
 }

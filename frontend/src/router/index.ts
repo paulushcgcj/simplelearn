@@ -1,6 +1,7 @@
 import { createWebHistory, createRouter } from 'vue-router'
+import type { RouteRecordRaw, RouteLocationNormalized } from 'vue-router'
 
-const routes = [
+const routes: Array<RouteRecordRaw> = [
   {
     name: 'home',
     path: '/',
@@ -15,13 +16,18 @@ const routes = [
     name: 'companies',
     path: '/companies',
     component: () => import('@/views/CompaniesPage.vue'),
-    props: (route: any) => ({ page: parseInt(route.query.page || '1'), size: parseInt(route.query.size || '10') })
+    props: (route: RouteLocationNormalized) => ({
+      page: parseInt((route.query.page as string) || '1'),
+      size: parseInt((route.query.size as string) || '10')
+    })
   },
   {
     name: 'companyDetails',
     path: '/companies/:id(\\d+)',
     component: () => import('@/views/CompanyDetailPage.vue'),
-    props: (route: any) => ({ id: parseInt(route.params.id) })
+    props: (route: RouteLocationNormalized) => ({
+      id: parseInt(route.params.id as string)
+    })
   },
   {
     name: 'companyCreate',
@@ -32,8 +38,10 @@ const routes = [
     name: 'companyEdit',
     path: '/companies/:id(\\d+)/edit',
     component: () => import('@/views/CompanyEditPage.vue'),
-    props: (route: any) => ({ id: parseInt(route.params.id) })
-  },
+    props: (route: RouteLocationNormalized) => ({
+      id: parseInt(route.params.id as string)
+    })
+  }
 ]
 
 const router = createRouter({
