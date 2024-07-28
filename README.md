@@ -42,19 +42,20 @@ To get started with the frontend, follow these steps:
    ```sh
    git clone git@github.com:paulushcgcj/simplelearn.git
    cd simplelearn
-  ```
+   ```
+
 2. **Install frontend dependencies:**
 
-  ```sh
-  cd frontend
-  npm i
-  ```
+   ```sh
+   cd frontend
+   npm i
+   ```
 
 3. **Start the frontend:**
 
-  ```sh
-  npm run dev
-  ```
+   ```sh
+   npm run dev
+   ```
 
 ## License
 
