@@ -1,17 +1,27 @@
 <script setup lang="ts">
-import HelloWorld from './components/HelloWorld.vue'
+import Header from '@/components/AppHeader.vue'
+import Footer from '@/components/AppFooter.vue'
 </script>
 
 <template>
-  <nav>
-    <RouterLink to="/">Go to Home</RouterLink> &nbsp;
-    <RouterLink to="/about">Go to About</RouterLink> &nbsp;
-    <RouterLink :to="{ name:'profile', params:{ msg:'Listen kin' }, query:{name:'Yuji'} }">Profile</RouterLink>
-  </nav>
-  <main>
-    <RouterView />
-  </main>
+  <div id="app" class="flex-col">
+    <Header />
+    <main>
+      <router-view />
+    </main>
+    <Footer />
+  </div>
 </template>
 
 <style scoped>
+#app {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+main {
+  flex: 1;
+  padding: 2em;
+}
 </style>
