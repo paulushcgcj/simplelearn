@@ -15,4 +15,20 @@ export default defineConfig({
       '@': fileURLToPath(new URL('./src', import.meta.url))
     }
   },
+  server: {
+    watch: {
+      usePolling: true,
+      ignorePermissionErrors: true,
+      ignored: [
+        '**/node_modules/**',
+        '**/.vscode/**',
+        '**/dist/**',
+        '**/coverage/**',
+        '**/build/**',
+        '**/out/**',
+        '**/reports/**',
+        '**/.husky/**'
+      ]
+    }
+  }
 })
