@@ -1,7 +1,7 @@
 <template>
   <header>
     <nav>
-      <input type="checkbox" id="sidebar-active" @change="debug" />
+      <input type="checkbox" id="sidebar-active" />
       <label for="sidebar-active" class="open-sidebar-button">
         <svgMenu class="svg" />
       </label>
@@ -23,10 +23,6 @@
 <script setup>
 import svgMenu from '@/assets/menu_icon.svg'
 import svgClose from '@/assets/close_icon.svg'
-
-const debug = e => {
-  console.log('debug', e.target.checked)
-}
 </script>
 
 <style scoped>
