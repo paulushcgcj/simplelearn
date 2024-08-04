@@ -4,7 +4,7 @@ import Footer from '@/components/AppFooter.vue'
 </script>
 
 <template>
-  <div id="app" class="flex-col">
+  <div class="main-app">
     <Header />
     <main>
       <router-view />
@@ -14,14 +14,9 @@ import Footer from '@/components/AppFooter.vue'
 </template>
 
 <style scoped>
-#app {
-  display: flex;
-  flex-direction: column;
-  min-height: 100vh;
-}
-
-main {
-  flex: 1;
-  padding: 2em;
+.main-app {
+  min-height: 100dvh;
+  display: grid;
+  grid-template-rows: auto 1fr auto;
 }
 </style>

@@ -26,6 +26,10 @@ import svgClose from '@/assets/close_icon.svg'
 </script>
 
 <style scoped>
+header {
+  position: sticky;
+  top: 0;
+}
 nav {
   height: 60px;
   background-color: var(--secondary-color);

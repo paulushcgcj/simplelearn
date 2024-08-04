@@ -1,5 +1,5 @@
 <template>
-  <footer class="app-footer">
+  <footer>
     <p>© 2024 Simple Accelerator. All rights reserved.</p>
   </footer>
 </template>
@@ -7,10 +7,14 @@
 <script setup lang="ts"></script>
 
 <style scoped>
-.app-footer {
-  background-color: #007bff;
-  color: white;
-  padding: 1rem;
-  text-align: center;
+footer {
+  background-color: var(--secondary-color);
+  color: var(--primary-color);
+  position: sticky;
+  bottom: 0;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  text-decoration: none;
 }
 </style>
