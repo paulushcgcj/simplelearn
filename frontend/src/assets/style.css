@@ -24,3 +24,11 @@ html {
   font-variation-settings: "wdth" 100;
   font-size: 1rem;
 }
+
+.img-txt{
+  background-image: url('/img/icon.svg');
+  background-size: cover;
+  --webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
