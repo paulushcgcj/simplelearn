@@ -1,6 +1,6 @@
 <template>
   <footer>
-    <p>© 2024 Simple Accelerator. All rights reserved.</p>
+    <p>© 2024 Accelerator. All rights reserved.</p>
   </footer>
 </template>
 
