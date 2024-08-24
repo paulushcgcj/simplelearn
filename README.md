@@ -1,6 +1,9 @@
-# Company Accelerator Frontend
+# The Northwind Corp
 
-Company Accelerator is a simple CRUD application designed to explore various tools, dependencies, and techniques. This project is composed of a frontend in Vue3 + TS + Vite + Router and a backend written in Java + Spring + R2DBC, utilizing reactive code.
+This demo project is based on the Northwind demo database, which provides a sample dataset for managing company information. The frontend and backend components work together to perform CRUD operations on the data, allowing users to create, read, update, and delete company entries. By utilizing the Northwind demo database, this project serves as a practical example of how to interact with real-world data in a web application.
+
+To get started with the Company Accelerator, follow the installation steps provided in the README.md file of the project repository. The original database scripts can be found [here](https://github.com/mrin9/northwind)
+
 
 ## Table of Contents
 
@@ -13,15 +16,12 @@ Company Accelerator is a simple CRUD application designed to explore various too
 
 ## Introduction
 
-The Company Accelerator frontend is a sample application built using Vue 3 and Vite. It serves as the user interface for managing company information, allowing users to create, read, update, and delete (CRUD) company entries. This project is experimental and serves as a playground to have some fun with different tools and technologies.
+The Company Accelerator is a sample application built using Vue 3 and Vite. It serves as the user interface for managing the northwind database information, allowing users to create, read, update, and delete (CRUD) various entries. This project is experimental and serves as a playground to have some fun with different tools and technologies.
 
 ## Features
 
-- List companies with pagination
-- View detailed information about a company
-- Add a new company
-- Edit an existing company
-- Delete a company
+- Frontend built using Vue3
+- Backend built using spring with reactive connection
 - Responsive design using Flexbox
 - Styled with basic CSS and Flexbox
 
@@ -32,30 +32,12 @@ The Company Accelerator frontend is a sample application built using Vue 3 and V
 - **TypeScript**: Typed superset of JavaScript
 - **Vue Router**: The official router for Vue.js
 - **CSS**: Styling
+- **Spring Boot**: For the backend
+- **Webflux**: For the reactive part
+- **R2DBC**: For reactive database connection
+- **Postgres**: For data storage
+- **Docker**: As infra
 
-## Installation
-
-To get started with the frontend, follow these steps:
-
-1. **Clone the repository:**
-
-   ```sh
-   git clone git@github.com:paulushcgcj/simplelearn.git
-   cd simplelearn
-   ```
-
-2. **Install frontend dependencies:**
-
-   ```sh
-   cd frontend
-   npm i
-   ```
-
-3. **Start the frontend:**
-
-   ```sh
-   npm run dev
-   ```
 
 ## License
 
