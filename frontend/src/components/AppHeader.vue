@@ -13,7 +13,7 @@
         </label>
 
         <router-link to="/" class="home-link">Home</router-link>
-        <router-link to="/companies">Companies</router-link>
+        <router-link to="/products">Products</router-link>
         <router-link to="/about">About</router-link>
       </div>
     </nav>
