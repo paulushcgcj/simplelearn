@@ -1,10 +1,32 @@
 @import url('https://fonts.googleapis.com/css2?family=Noto+Sans&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
 
 :root {
-  --primary-color: #60a3d9; /* Blue Grotto */
-  --secondary-color: #003b73; /* Navy Blue */
-  --tertiary-color: #bfd7ed; /* Baby Blue */
-  --supplementary-color: #0074b7; /* Royal Blue */
+  /* CSS HEX */
+  --marian-blue: #3d3b8eff;
+  --pacific-cyan: #0eb1d2ff;
+  --fluorescent-cyan: #34e4eaff;
+  --antiflash-white: #f0edeeff;
+  --rose-quartz: #a799b7ff;
+
+  /* CSS HSL */
+  --marian-blue: hsla(241, 41%, 39%, 1);
+  --pacific-cyan: hsla(190, 87%, 44%, 1);
+  --fluorescent-cyan: hsla(182, 81%, 56%, 1);
+  --antiflash-white: hsla(340, 9%, 94%, 1);
+  --rose-quartz: hsla(268, 17%, 66%, 1);
+
+  /* Summer Splash Theme */
+  --primary-color: var(--marian-blue);
+  --secondary-color: var(--pacific-cyan);
+  --tertiary-color: var(--fluorescent-cyan);
+  --quaternary-color: var(--rose-quartz);
+  --supplementary-color: var(--antiflash-white);
+
+  /* Additional Colors */
+  --error-color: #e74c3c; /* Red for errors */
+  --warning-color: #f39c12; /* Amber for warnings */
+  --success-color: #27ae60; /* Green for success */
+  --active-link-color: #ffcc00; /* Bright yellow for active links */
 }
 
 /* CSS Reset */
@@ -40,6 +62,15 @@ section {
   animation: appear linear;
   animation-timeline: view();
   animation-range: entry 0% cover 40%;
+}
+
+.page-active {
+  text-decoration: underline !important;
+  font-weight: 500;
+  color: var(--suplementary-color) !important;
+}
+.page-active-exact {
+  font-weight: 800 !important;
 }
 
 @keyframes appear {
