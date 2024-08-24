@@ -1,11 +1,24 @@
 <template>
   <div>
-    <input
-      v-if="filterEnabled"
-      type="text"
-      @input="$emit('filter', ($event.target as HTMLInputElement).value)"
-      placeholder="Filter..."
-    />
+    <div class="filter-group">
+      <input type="checkbox" id="filter-active" />
+      <label for="filter-active" class="open-filter-button">
+        <searchIcon class="svg" />
+      </label>
+
+      <div class="filter-container">
+        <div>
+          <label for="filter"><searchIcon class="svg" /></label>
+          <input
+            id="filter"
+            v-if="filterEnabled"
+            type="text"
+            @input="$emit('filter', ($event.target as HTMLInputElement).value)"
+            placeholder="Filter table"
+          />
+        </div>
+      </div>
+    </div>
 
     <table>
       <thead>
@@ -91,6 +104,7 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 import type { DataTableProps } from '@/dtos/dataTableDto'
+import searchIcon from '@/assets/search.svg'
 
 const props = withDefaults(defineProps<DataTableProps>(), {
   filterEnabled: true,
@@ -118,22 +132,118 @@ const totalPages = computed(() => props.pagination?.totalPages ?? 1)
 </script>
 
 <style scoped>
+#filter-active {
+  display: none;
+}
+label.open-filter-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  width: 1.5rem;
+  height: 2.5rem;
+  margin-right: 0.25rem;
+}
+label.open-filter-button svg {
+  width: 1.5rem;
+  height: 1.5rem;
+  display: block;
+  fill: var(--primary-color);
+}
+#filter-active:checked ~ .filter-container {
+  visibility: visible;
+  opacity: 1;
+  max-height: 100px;
+  transition:
+    opacity 0.3s ease,
+    max-height 0.3s ease;
+  transition-delay: 0s, 0s;
+}
+.filter-group {
+  display: flex;
+  flex-direction: row-reverse;
+  justify-content: flex-start;
+  align-items: center;
+}
+.filter-container {
+  visibility: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-grow: 1;
+  opacity: 0;
+  max-height: 0;
+  transition:
+    opacity 0.3s ease,
+    max-height 0.3s ease,
+    visibility 0s 0.3s;
+}
+div.filter-container div {
+  display: flex;
+  align-items: center;
+  flex-grow: 1;
+}
+div.filter-container div label {
+  flex-shrink: 0;
+  height: 2.5rem;
+  width: 2.5rem;
+  background-color: var(--primary-color);
+  fill: var(--tertiary-color);
+  color: var(--tertiary-color);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 2px solid var(--primary-color);
+  border-right: none;
+  transition: 150ms ease;
+}
+div.filter-container div input {
+  box-sizing: border-box;
+  flex-grow: 1;
+  min-width: 0;
+  height: 2.5rem;
+  padding: 1em;
+  border-radius: 0 0.55rem 0.55rem 0;
+  border: 2px solid var(--primary-color);
+  border-color: var(--primary-color, #ddd);
+  border-left: none;
+  transition: 150ms ease;
+}
+div.filter-container div input::placeholder {
+  color: var(--secondary-color, #ddd);
+  opacity: 1;
+}
+div.filter-container div input:hover {
+  border-color: var(--supplementary-color, #ddd);
+}
+div.filter-container div input:focus {
+  outline: none;
+  border-color: var(--secondary-color, #007bff);
+}
+div.filter-container div:has(input:focus) > label {
+  background-color: var(--secondary-color, #007bff);
+  border-color: var(--secondary-color, #007bff);
+  color: var(--secondary-color, #007bff);
+}
+div.filter-container div:has(input:hover) > label {
+  background-color: var(--supplementary-color, #007bff);
+  border-color: var(--supplementary-color, #ddd);
+  color: var(--supplementary-color, #007bff);
+}
+
 table {
   width: 100%;
   border-collapse: collapse;
 }
-
 th,
 td {
   padding: 1rem;
   border: 1px solid var(--tertiary-color, #ddd);
   text-align: left;
 }
-
 th {
   background-color: var(--tertiary-color, #f4f4f4);
 }
-
 button {
   margin-right: 0.5rem;
   padding: 0.33rem 0.75rem;
@@ -143,20 +253,8 @@ button {
   cursor: pointer;
   border-radius: 4px;
 }
-
 button:hover {
   background-color: var(--suplementary-color, #0056b3);
-}
-
-div {
-  margin-top: 20px;
-}
-
-input[type='text'] {
-  margin-bottom: 10px;
-  padding: 8px;
-  border: 1px solid var(--tertiary-color, #ddd);
-  border-radius: 4px;
 }
 .pagination-controls {
   display: flex;
@@ -179,12 +277,10 @@ input[type='text'] {
   border-top-left-radius: 4px;
   border-bottom-left-radius: 4px;
 }
-
 .action-buttons button:last-child {
   border-top-right-radius: 4px;
   border-bottom-right-radius: 4px;
 }
-
 .action-buttons button:not(:last-child) {
   border-right: 1px solid var(--tertiary-color, #ddd);
 }
