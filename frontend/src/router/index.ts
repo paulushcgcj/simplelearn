@@ -50,6 +50,8 @@ const routes: Array<RouteRecordRaw> = [
 ]
 
 const router = createRouter({
+  linkActiveClass: 'page-active',
+  linkExactActiveClass: 'page-active-exact',
   history: createWebHistory(),
   routes
 })

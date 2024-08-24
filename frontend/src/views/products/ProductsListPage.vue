@@ -6,7 +6,9 @@
     :entries="entries"
     :pagination="pagination"
     @nextPage="loadNextPage"
+    @firstPage="loadData(1)"
     @prevPage="loadPrevPage"
+    @lastPage="loadData(pagination.totalPages)"
     @filter="handleFilter"
     @sort="handleSort"
     @delete="handleDelete"
@@ -33,7 +35,9 @@ const columns = ref([
 ])
 const pagination = ref({
   prevPage: false,
-  nextPage: true
+  nextPage: true,
+  currentPage: 1,
+  totalPages: 1
 })
 
 const loadNextPage = async () => {
@@ -71,7 +75,9 @@ const loadData = async (page = 1, filter = '', sort = '') => {
   entries.value = mockData.slice(startIndex, endIndex)
   pagination.value = {
     prevPage: currentPage > 1,
-    nextPage: currentPage * 5 < mockData.length
+    nextPage: currentPage * 5 < mockData.length,
+    currentPage: currentPage,
+    totalPages: Math.ceil(mockData.length / 5)
   }
 }
 

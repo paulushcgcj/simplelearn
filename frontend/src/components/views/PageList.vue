@@ -7,12 +7,14 @@
       </router-link>
     </header>
     <DataTable
-      :columns="columns"
-      :entries="entries"
-      :basePath="basePath"
-      :pagination="pagination"
+      :columns
+      :entries
+      :basePath
+      :pagination
       @nextPage="$emit('nextPage')"
+      @firstPage="$emit('firstPage')"
       @prevPage="$emit('prevPage')"
+      @lastPage="$emit('lastPage')"
       @delete="$emit('delete', $event)"
       @filter="$emit('filter', $event)"
       @sort="$emit('sort', $event)"
@@ -21,34 +23,24 @@
 </template>
 
 <script setup lang="ts">
+// Basic vue imports
 import { PropType } from 'vue'
+// Importing components
 import DataTable from '@/components/DataTable.vue'
-import type { Column, Entry, Pagination } from '@/dtos/dataTableDto'
+// Importing types
+import type { PageList } from '@/dtos/dataTableDto'
 
-defineProps({
-  title: {
-    type: String,
-    required: true
-  },
-  basePath: {
-    type: String,
-    required: true
-  },
-  columns: {
-    type: Array as PropType<Column[]>,
-    required: true
-  },
-  entries: {
-    type: Array as PropType<Entry[]>,
-    required: true
-  },
-  pagination: {
-    type: Object as PropType<Pagination>,
-    required: false
-  }
-})
-
-defineEmits(['nextPage', 'prevPage', 'delete', 'filter', 'sort'])
+// Defining props and emits
+defineProps<PageList>()
+defineEmits<{
+  (e: 'nextPage'): void
+  (e: 'firstPage'): void
+  (e: 'prevPage'): void
+  (e: 'lastPage'): void
+  (e: 'delete', id: number): void
+  (e: 'filter', filter: string): void
+  (e: 'sort', sort: string): void
+}>()
 </script>
 
 <style scoped>
