@@ -89,7 +89,7 @@
 </template>
 
 <script setup lang="ts">
-import { PropType, computed } from 'vue'
+import { computed } from 'vue'
 import type { DataTableProps } from '@/dtos/dataTableDto'
 
 const props = withDefaults(defineProps<DataTableProps>(), {

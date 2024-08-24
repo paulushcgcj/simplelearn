@@ -23,8 +23,6 @@
 </template>
 
 <script setup lang="ts">
-// Basic vue imports
-import { PropType } from 'vue'
 // Importing components
 import DataTable from '@/components/DataTable.vue'
 // Importing types
