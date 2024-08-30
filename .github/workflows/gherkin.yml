@@ -22,7 +22,7 @@ jobs:
         run: |
           ISSUE_TITLE="${{ github.event.issue.title }}"
           echo "Issue body: ${{ github.event.issue.body }}"
-          GHERKIN_TEXT=$(echo "${{ github.event.issue.body }}" | sed -n '/```gherkin/,/```/p' | sed '1d;$d')
+          GHERKIN_TEXT=$(echo "${{ github.event.issue.body }}" | sed -n '/```gherkin/,/```/p'| sed '1d;$d')
           echo "GHERKIN_TEXT=$GHERKIN_TEXT"
           SAFE_TITLE=$(echo "$ISSUE_TITLE" | tr -cd '[:alnum:]-' | tr '[:upper:]' '[:lower:]')
           FILE_PATH="features/${SAFE_TITLE}.feature"
