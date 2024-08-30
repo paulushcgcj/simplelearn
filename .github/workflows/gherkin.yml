@@ -18,23 +18,21 @@ jobs:
         id: extract-gherkin
         run: |
           ISSUE_TITLE="${{ github.event.issue.title }}"
-          echo "ISSUE_TITLE=$ISSUE_TITLE"
           GHERKIN_TEXT=$(echo "${{ github.event.issue.body }}" | sed -n '/```gherkin/,/```/p' | sed '1d;$d')
           echo "GHERKIN_TEXT=$GHERKIN_TEXT"
           SAFE_TITLE=$(echo "$ISSUE_TITLE" | tr -cd '[:alnum:]-' | tr '[:upper:]' '[:lower:]')
-          echo "SAFE_TITLE=$SAFE_TITLE"
           FILE_PATH="features/${SAFE_TITLE}.feature"
-          echo "FILE_PATH=$FILE_PATH"
           mkdir -p features
           echo "$GHERKIN_TEXT" > "$FILE_PATH"
           echo "FILE_PATH=$FILE_PATH" >> $GITHUB_OUTPUT
 
-      - name: Create a new branch
-        run: |
-          git checkout -b feature/${{ github.event.issue.number }}-gherkin
-          git add ${{ steps.extract-gherkin.outputs.FILE_PATH }}
-          git commit -m "test(gherkin): Added Gherkin scenario from issue #${{ github.event.issue.number }}"
-          git push origin feature/${{ github.event.issue.number }}-gherkin
+      - name: Commit & Push changes
+        uses: Andro999b/push@v1.3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          branch: feature/${{ github.event.issue.number }}-gherkin
+          force: true
+          message: "test(gherkin): Added Gherkin scenario from issue #${{ github.event.issue.number }}"
 
       - name: Create Pull Request
         uses: peter-evans/create-pull-request@v5
