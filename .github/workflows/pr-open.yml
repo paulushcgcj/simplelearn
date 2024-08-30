@@ -1,0 +1,66 @@
+name: Pull Request Open
+
+on:
+  pull_request:
+  workflow_dispatch:
+
+concurrency:
+  # PR open and close use the same group, allowing only one at a time
+  group: ${{ github.event.number }}
+  cancel-in-progress: true
+
+jobs:
+  vars:
+    name: Variables
+    runs-on: ubuntu-latest
+    outputs:
+      semver: ${{ steps.semver.outputs.tag }}
+      url: ${{ steps.calculate.outputs.url }}
+    steps:
+      # steps.semver.outputs.tag => needs.vars.outputs.semver
+      - uses: actions/checkout@v4
+        with:
+          ref: refs/heads/${{ github.event.repository.default_branch }}
+      - name: Conventional Changelog Update
+        uses: TriPSs/conventional-changelog-action@v5.3.0
+        id: semver
+        with:
+          git-branch: refs/heads/${{ github.head_ref }}
+          git-push: 'false'
+          skip-commit: 'true'
+          skip-on-empty: 'false'
+          skip-version-file: 'true'
+      
+  builds:
+    name: Builds
+    runs-on: ubuntu-22.04
+    needs: [vars]
+    permissions:
+      packages: write
+    strategy:
+      matrix:
+        package: [frontend]
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Log in to the Container registry
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ github.token }}
+
+      - name: Build and push ${{ matrix.package }} Docker image
+        uses: docker/build-push-action@v6
+        with:
+          context: ${{ matrix.package }}
+          file: ${{ matrix.package }}/Dockerfile
+          push: true
+          tags: ghcr.io/${{ github.repository }}/${{ matrix.package }}:${{ github.event.number }}
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+          build-args: |
+            APP_VERSION=${{ needs.vars.outputs.semver }}-${{ github.event.number }}

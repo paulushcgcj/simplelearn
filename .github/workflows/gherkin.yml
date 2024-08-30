@@ -1,0 +1,39 @@
+name: Create Gherkin Feature from Issue
+on:
+  issues:
+    types:
+      - opened
+
+jobs:
+  create-feature:
+    if: contains(github.event.issue.labels.*.name, 'gherkin')
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Extract Gherkin Block
+        id: extract-gherkin
+        run: |
+          ISSUE_TITLE="${{ github.event.issue.title }}"
+          GHERKIN_TEXT=$(echo "${{ github.event.issue.body }}" | sed -n '/```gherkin/,/```/p' | sed '1d;$d')
+          SAFE_TITLE=$(echo "$ISSUE_TITLE" | tr -cd '[:alnum:]-' | tr '[:upper:]' '[:lower:]')
+          FILE_PATH="features/${SAFE_TITLE}.feature"
+          mkdir -p features
+          echo "$GHERKIN_TEXT" > "$FILE_PATH"
+          echo "FILE_PATH=$FILE_PATH" >> $GITHUB_OUTPUT
+
+      - name: Create a new branch
+        run: |
+          git checkout -b feature/${{ github.event.issue.number }}-gherkin
+          git add ${{ steps.extract-gherkin.outputs.FILE_PATH }}
+          git commit -m "test(gherkin): Added Gherkin scenario from issue #${{ github.event.issue.number }}"
+          git push origin feature/${{ github.event.issue.number }}-gherkin
+
+      - name: Create Pull Request
+        uses: peter-evans/create-pull-request@v5
+        with:
+          branch: feature/${{ github.event.issue.number }}-gherkin
+          title: "Add Gherkin scenario from issue #${{ github.event.issue.number }}"
+          body: "This pull request adds a Gherkin scenario extracted from issue #${{ github.event.issue.number }}."

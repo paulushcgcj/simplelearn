@@ -17,15 +17,6 @@
     "types": [
       "vite/client"
     ],
-    "include": [
-      "src/**/*.ts",
-      "src/**/*.d.ts",
-      "src/**/*.tsx",
-      "src/**/*.vue"
-    ],
-    "exclude": [
-      "node_modules"
-    ],
     "baseUrl": ".",
     "paths": {
       "@/*": [
@@ -35,6 +26,15 @@
     "composite": true,
     "downlevelIteration": true,
     "strict": true,
-    "noEmit": true
-  }
+    "noEmit": false
+  },
+  "include": [
+    "src/**/*.ts",
+    "src/**/*.d.ts",
+    "src/**/*.tsx",
+    "src/**/*.vue"
+  ],
+  "exclude": [
+    "node_modules"
+  ],
 }

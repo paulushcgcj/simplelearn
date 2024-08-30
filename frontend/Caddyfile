@@ -1,0 +1,59 @@
+{
+	auto_https off
+	admin 0.0.0.0:3001
+  servers {
+    metrics
+  }
+}
+
+:3000 {
+	header {
+		Content-Security-Policy "default-src 'self'; script-src 'self' 'sha256-78ZXazjC54Vyx/bLgKdM8JyK8U1O4A8TfYVLwFADf5o=' 'sha256-Qs6++yhvyp3S1k2F02oXxvTs1oQRWRgd1/4EUgvgWlc=' 'sha256-{$ENTRY_CHKSM}' 'sha256-{$DATA_CHKSM}'; img-src 'self'; connect-src 'self'; frame-ancestors 'none'; form-action 'self'; frame-src 'none'; manifest-src 'self'; worker-src 'self'; upgrade-insecure-requests; block-all-mixed-content;"
+		Permissions-Policy "geolocation=(), microphone=(), camera=(), speaker=(), usb=(), bluetooth=(), payment=(), interest-cohort=()"
+		Strict-Transport-Security "max-age=2592000; includeSubDomains;"
+		Cache-Control "public, max-age=31536000"
+		Referrer-Policy "no-referrer, strict-origin-when-cross-origin"
+		X-Content-Type-Options "nosniff"
+		X-Frame-Options "DENY"
+		-Server
+	}
+
+	root * /srv
+
+	respond /config 200 {
+		body `{"APP_TITLE":{$VITE_APP_TITLE}}`
+		close
+	}
+
+	respond /notfound 404 {
+		body `{"APP_TITLE":{$VITE_APP_TITLE}}`
+		close
+	}
+
+	file_server
+
+	@www_host {
+		host www.{$HOST_ROUTE}
+	}
+	redir @www_host http://{$HOST_ROUTE}{path}
+
+	@unspecified_path {
+		not path_regexp ^\/0.0.0.0
+	}
+	handle @unspecified_path {
+		try_files {path} {path}/ /?_url={uri}
+	}
+
+	encode {
+		gzip 7
+	}
+
+	log {
+		output stdout
+		format console {
+			time_format iso8601
+			level_format color
+		}
+		level {$LOG_LEVEL}
+	}
+}

@@ -7,7 +7,6 @@
     "verbatimModuleSyntax": true,
     "types": [
       "node",
-      "vitest"
     ],
   },
   "include": ["vite.config.ts"]
