@@ -59,7 +59,7 @@ jobs:
           context: ${{ matrix.package }}
           file: ${{ matrix.package }}/Dockerfile
           push: true
-          tags: ${{ github.event.number }}
+          tags: ghcr.io/${{ github.repository }}/${{ matrix.package }}:${{ github.event.number }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
           build-args: |
