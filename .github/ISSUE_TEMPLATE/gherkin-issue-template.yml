@@ -1,0 +1,24 @@
+name: User provided automated tests
+description: Please provide a Gherkin scenario for your issue.
+title: '[Test Case]: '
+labels: gherkin
+body:
+  - type: markdown
+    attributes:
+      value: |
+        ### Please provide the Gherkin Scenario below:
+  - type: textarea
+    id: gherkin_scenario
+    attributes:
+      label: Gherkin Scenario
+      description: 'Paste your Gherkin feature here.'
+      placeholder: |
+        ```gherkin
+        Feature: [Feature Name]
+          Scenario: [Scenario Name]
+            Given [some initial context]
+            When [some event occurs]
+            Then [some outcome should occur]
+        ```
+    validations:
+      required: true
