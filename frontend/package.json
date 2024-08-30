@@ -24,7 +24,8 @@
   "homepage": "https://github.com/paulushcgcj/simplelearn#readme",
   "scripts": {
     "dev": "vite --host",
-    "build": "vue-tsc -b --noEmit && vite build",
+    "build": "vue-tsc -b && vite build",
+    "prebuild": "npm run lint && npm run format",
     "lint": "eslint 'src/**/*.{ts,tsx,vue}' --fix",
     "format": "prettier --write 'src/**/*.{ts,tsx,vue,css,scss,md}'",
     "prepare": "cd .. && husky frontend/.husky || true"
@@ -40,8 +41,11 @@
     "@types/node": "^20.14.12",
     "@types/uuid": "^10.0.0",
     "@vitejs/plugin-vue": "^5.0.5",
+    "@vue/compiler-sfc": "^3.4.38",
     "@vue/eslint-config-prettier": "^9.0.0",
     "@vue/eslint-config-typescript": "^13.0.0",
+    "@vue/runtime-core": "^3.4.38",
+    "@vue/runtime-dom": "^3.4.38",
     "eslint": "^8.57.0",
     "eslint-plugin-vue": "^9.27.0",
     "husky": "^9.1.3",
