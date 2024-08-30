@@ -27,4 +27,6 @@ EXPOSE 3000
 HEALTHCHECK --interval=30s --timeout=3s CMD curl -f http://localhost:3000/
 USER 1001
 
+ENV LOG_LEVEL=INFO
+
 CMD ["/bin/sh", "-c", ". /app/setenv.sh; caddy run --config /etc/caddy/Caddyfile --adapter caddyfile"]
