@@ -25,7 +25,6 @@
   "scripts": {
     "dev": "vite --host",
     "build": "vue-tsc -b && vite build",
-    "prebuild": "npm run lint && npm run format",
     "lint": "eslint 'src/**/*.{ts,tsx,vue}' --fix",
     "format": "prettier --write 'src/**/*.{ts,tsx,vue,css,scss,md}'",
     "prepare": "cd .. && husky frontend/.husky || true"
