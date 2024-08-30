@@ -27,7 +27,8 @@
     "build": "vue-tsc -b && vite build",
     "lint": "eslint 'src/**/*.{ts,tsx,vue}' --fix",
     "format": "prettier --write 'src/**/*.{ts,tsx,vue,css,scss,md}'",
-    "prepare": "cd .. && husky frontend/.husky || true"
+    "prepare": "cd .. && husky frontend/.husky || true",
+    "test:unit": "echo 'No unit tests yet!'"
   },
   "dependencies": {
     "uuid": "^10.0.0",
