@@ -24,24 +24,6 @@ jobs:
         if: github.event.pull_request.head.repo.fork
         run: exit 1
 
-      # Add PR Description, doesn't work with forks
-      - name: PR Description        
-        uses: bcgov-nr/action-pr-description-add@v1.1.2
-        env:
-          DOMAIN: apps.silver.devops.gov.bc.ca
-          PREFIX: ${{ github.event.repository.name }}
-        with:
-          add_markdown: |
-            ---
-
-            Thanks for the PR!
-
-            Please create PRs in draft mode.  Mark as ready to enable:
-            - [Analysis Workflow](https://github.com/${{ github.repository }}/actions/workflows/analysis.yml)
-
-            After merge, new images are deployed in:
-            - [Merge Workflow](https://github.com/${{ github.repository }}/actions/workflows/merge.yml)
-
       # Notify of any failures
       - name: Errors
         if: failure()
