@@ -10,6 +10,8 @@ const owner = process.env.GITHUB_REPOSITORY_OWNER;
 const repo = process.env.GITHUB_REPOSITORY.split("/")[1];
 const issueNumber = process.env.ISSUE_NUMBER;
 
+console.log(`Extracting Gherkin content from issue #${issueNumber} in ${owner}/${repo}...`);
+
 (async () => {
   try {
     // Fetch the issue data from GitHub
@@ -40,10 +42,10 @@ const issueNumber = process.env.ISSUE_NUMBER;
     }
 
     // Sanitize the issue title to create a safe filename
-    const sanitizedTitle = issueTitle.replace('[Test Case]:', '').replace(/[^a-z0-9]+/gi, '-').toLowerCase();
+    const sanitizedTitle = issueTitle.replace('[Test Case]:', '').trim().replace(/[^a-z0-9]+/gi, '-').toLowerCase();
 
     // Write the Gherkin content to a .feature file
-    const filePath = `./features/${sanitizedTitle}.feature`;
+    const filePath = `../cypress/cypress/e2e/${sanitizedTitle}.feature`;
     writeFileSync(filePath, gherkinText.trim());
 
     console.log(`Gherkin feature file created: ${filePath}`);
