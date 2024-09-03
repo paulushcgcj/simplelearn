@@ -1,0 +1,5 @@
+Feature: [Feature Name]
+  Scenario: [Scenario Name]
+    Given [some initial context]
+    When [some event occurs]
+    Then [some outcome should occur]
