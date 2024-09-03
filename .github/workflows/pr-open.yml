@@ -71,6 +71,11 @@ jobs:
     services:
       frontend:
         image: ghcr.io/${{ github.repository }}/frontend:${{ github.event.number }}
+        options: >-
+          --health-cmd "curl -f http://localhost:3000/"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
         ports:
           - 3000:3000
     steps:
