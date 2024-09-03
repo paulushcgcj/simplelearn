@@ -30,7 +30,7 @@ jobs:
         working-directory: gkextract
         run: |
           set -euxo nounset
-          
+
           ISSUE_TITLE="${{ github.event.issue.title }}"
           ISSUE_BODY=$(echo "${{ toJSON(github.event.issue.body) }}" | jq -r .)  # Escape issue body properly
           
@@ -51,3 +51,10 @@ jobs:
           branch: feature/${{ github.event.issue.number }}-gherkin
           title: "Add Gherkin scenario from issue #${{ github.event.issue.number }}"
           body: "This pull request adds a Gherkin scenario extracted from issue #${{ github.event.issue.number }}."
+
+  dump-issue:
+    if: contains(github.event.issue.labels.*.name, 'gherkin')
+    runs-on: ubuntu-latest
+    steps:
+      - name: Dump Issue
+        run: echo "${{ toJSON(github.event.issue) }}"
