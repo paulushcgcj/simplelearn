@@ -30,8 +30,9 @@ jobs:
         working-directory: gkextract
         run: |
           ISSUE_TITLE="${{ github.event.issue.title }}"
-          ISSUE_BODY="${{ github.event.issue.body }}"
-          node index.js
+          ISSUE_BODY=$(echo "${{ toJSON(github.event.issue.body) }}" | jq -r .)  # Escape issue body properly
+          
+          node index.js "$ISSUE_TITLE" "$ISSUE_BODY"
           mv *.feature ../cypress/cypress/e2e/
 
       - name: Commit & Push changes
