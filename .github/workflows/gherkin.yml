@@ -29,6 +29,8 @@ jobs:
       - name: Run index.js        
         working-directory: gkextract
         run: |
+          set -euxo nounset
+          
           ISSUE_TITLE="${{ github.event.issue.title }}"
           ISSUE_BODY=$(echo "${{ toJSON(github.event.issue.body) }}" | jq -r .)  # Escape issue body properly
           
