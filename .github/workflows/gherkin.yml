@@ -28,13 +28,13 @@ jobs:
 
       - name: Run index.js        
         working-directory: gkextract
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_REPOSITORY_OWNER: ${{ github.repository_owner }}
+          GITHUB_REPOSITORY: ${{ github.repository }}
+          ISSUE_NUMBER: ${{ github.event.issue.number }}
         run: |
-          set -euxo nounset
-
-          ISSUE_TITLE="${{ github.event.issue.title }}"
-          ISSUE_BODY=$(echo "${{ toJSON(github.event.issue.body) }}")  # Escape issue body properly
-          
-          node index.js "$ISSUE_TITLE" "$ISSUE_BODY"
+          node index.js
           mv *.feature ../cypress/cypress/e2e/
 
       - name: Commit & Push changes
