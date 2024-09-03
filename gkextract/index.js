@@ -1,6 +1,6 @@
-const { Octokit } = require("@octokit/rest");
-const MarkdownIt = require('markdown-it');
-const fs = require('fs');
+import { Octokit } from "@octokit/rest";
+import MarkdownIt from 'markdown-it';
+import { writeFileSync } from 'fs';
 
 // Initialize the GitHub client with the token
 const octokit = new Octokit({ auth: process.env.GITHUB_TOKEN });
@@ -44,7 +44,7 @@ const issueNumber = process.env.ISSUE_NUMBER;
 
     // Write the Gherkin content to a .feature file
     const filePath = `./features/${sanitizedTitle}.feature`;
-    fs.writeFileSync(filePath, gherkinText.trim());
+    writeFileSync(filePath, gherkinText.trim());
 
     console.log(`Gherkin feature file created: ${filePath}`);
   } catch (error) {
