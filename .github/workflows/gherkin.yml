@@ -35,7 +35,6 @@ jobs:
           ISSUE_NUMBER: ${{ github.event.issue.number }}
         run: |
           node index.js
-          mv *.feature ../cypress/cypress/e2e/
 
       - name: Commit & Push changes
         uses: Andro999b/push@v1.3
