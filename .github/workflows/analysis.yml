@@ -14,6 +14,23 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
+  vars:
+    name: Set Variables
+    outputs:
+      user: ${{ steps.data.outputs.user }}
+      pass: ${{ steps.data.outputs.pass }}
+    runs-on: ubuntu-22.04
+    timeout-minutes: 1
+    steps:
+      - name: Generate random username and password
+        id: data
+        run: |          
+          USERNAME="user$(shuf -i 1000-9999 -n 1)"
+          PASSWORD=$(openssl rand -base64 12)
+
+          echo "user=$USERNAME" >> $GITHUB_OUTPUT
+          echo "pass=$PASSWORD" >> $GITHUB_OUTPUT
+
   tests-frontend:
     name: Frontend Unit Tests
     if: github.event_name != 'pull_request' || !github.event.pull_request.draft
@@ -86,3 +103,60 @@ jobs:
     runs-on: ubuntu-22.04
     steps:
       - run: echo "Workflow completed successfully!"
+  
+  cypress-run:
+    name: User flow test
+    runs-on: ubuntu-22.04
+    services:
+      postgres:
+        image: ghcr.io/${{ github.repository }}/frontend:${{ github.event.number }}
+        options: >-
+          --health-cmd curl -f http://localhost:3000/
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+        ports:
+          - 3000:3000
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        name: Start node
+        with:
+          node-version: 18
+
+      - name: Run Cypress End-to-End
+        uses: cypress-io/github-action@v5
+        with:
+          working-directory: cypress
+        env:
+          CYPRESS_baseUrl: http://localhost:3000
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Publish Cypress Results
+        uses: mikepenz/action-junit-report@v4
+        continue-on-error: true
+        if: always()
+        with:
+          report_paths: cypress/result.xml
+          commit: ${{ github.event.pull_request.head.sha }}
+          summary: Cypress Test Results
+          detailed_summary: true
+          job_name: User Journeys
+
+      - uses: actions/upload-artifact@v4
+        name: Upload Cypress Screenshots with error
+        if: failure()
+        with:
+          name: cypress-screenshots
+          path: cypress/cypress/screenshots
+          retention-days: 7
+
+      - uses: actions/upload-artifact@v4
+        name: Upload Cypress Videos with error
+        if: failure()
+        with:
+          name: cypress-videos
+          path: cypress/cypress/videos
+          retention-days: 7

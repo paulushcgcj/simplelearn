@@ -1,0 +1,26 @@
+{
+  "name": "gkextract",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },  
+  "repository": {
+    "type": "git",
+    "url": "git+git@github.com:paulushcgcj/simplelearn.git"
+  },
+  "author": "Paulo Gomes da Cruz Jr",
+  "license": "Apache-2.0",
+  "keywords": [
+    "cypress",
+    "gherkin",
+  ],
+  "bugs": {
+    "url": "https://github.com/paulushcgcj/simplelearn/issues"
+  },
+  "homepage": "https://github.com/paulushcgcj/simplelearn#readme",
+  "description": "",
+  "dependencies": {
+    "markdown-it": "^14.1.0"
+  }
+}

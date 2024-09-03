@@ -17,18 +17,22 @@ jobs:
           persist-credentials: false
           fetch-depth: 0
 
-      - name: Extract Gherkin Block
-        id: extract-gherkin
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+
+      - name: Install dependencies        
+        working-directory: gkextract
+        run: npm install
+
+      - name: Run index.js        
+        working-directory: gkextract
         run: |
           ISSUE_TITLE="${{ github.event.issue.title }}"
-          echo "Issue body: ${{ github.event.issue.body }}"
-          GHERKIN_TEXT=$(echo "${{ github.event.issue.body }}" | sed -n '/```gherkin/,/```/p'| sed '1d;$d')
-          echo "GHERKIN_TEXT=$GHERKIN_TEXT"
-          SAFE_TITLE=$(echo "$ISSUE_TITLE" | tr -cd '[:alnum:]-' | tr '[:upper:]' '[:lower:]')
-          FILE_PATH="features/${SAFE_TITLE}.feature"
-          mkdir -p features
-          echo "$GHERKIN_TEXT" > "$FILE_PATH"
-          echo "FILE_PATH=$FILE_PATH" >> $GITHUB_OUTPUT
+          ISSUE_BODY="${{ github.event.issue.body }}"
+          node index.js
+          mv *.feature ../cypress/cypress/e2e/
 
       - name: Commit & Push changes
         uses: Andro999b/push@v1.3
