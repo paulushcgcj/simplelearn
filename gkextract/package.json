@@ -13,7 +13,7 @@
   "license": "Apache-2.0",
   "keywords": [
     "cypress",
-    "gherkin",
+    "gherkin"
   ],
   "bugs": {
     "url": "https://github.com/paulushcgcj/simplelearn/issues"
