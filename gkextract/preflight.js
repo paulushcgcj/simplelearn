@@ -1,4 +1,5 @@
 import { Octokit } from "@octokit/rest";
+import { appendFileSync } from 'fs';
 
 // Initialize the GitHub client with the token
 const octokit = new Octokit({ auth: process.env.GITHUB_TOKEN });
@@ -40,7 +41,8 @@ console.log(`Formatting content from issue #${issueNumber} in ${owner}/${repo}..
     }
 
     updatedTitle = updatedTitle.replace("[Test Case]: ", "");
-    console.log(`::set-output name=title::${updatedTitle}`);
+    appendFileSync(process.env.GITHUB_OUTPUT, `title=${updatedTitle}\n`);
+
 
   } catch (error) {
     console.error('Error fetching and/or updating issue data:', error);
