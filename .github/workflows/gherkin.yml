@@ -26,7 +26,7 @@ jobs:
         working-directory: gkextract
         run: npm install
 
-      - name: Run index.js        
+      - name: Run preflight.js        
         working-directory: gkextract
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -34,26 +34,29 @@ jobs:
           GITHUB_REPOSITORY: ${{ github.repository }}
           ISSUE_NUMBER: ${{ github.event.issue.number }}
         run: |
-          node index.js
+          node preflight.js
 
-      - name: Commit & Push changes
-        uses: Andro999b/push@v1.3
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          branch: feature/${{ github.event.issue.number }}-gherkin
-          force: true
-          message: "test(gherkin): Added Gherkin scenario from issue #${{ github.event.issue.number }}"
-
-      - name: Create Pull Request
-        uses: peter-evans/create-pull-request@v5
-        with:
-          branch: feature/${{ github.event.issue.number }}-gherkin
-          title: "Add Gherkin scenario from issue #${{ github.event.issue.number }}"
-          body: "This pull request adds a Gherkin scenario extracted from issue #${{ github.event.issue.number }}."
-
-  dump-issue:
-    if: contains(github.event.issue.labels.*.name, 'gherkin')
-    runs-on: ubuntu-latest
-    steps:
-      - name: Dump Issue
-        run: echo "${{ toJSON(github.event.issue) }}"
+#      - name: Run index.js        
+#        working-directory: gkextract
+#        env:
+#          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+#          GITHUB_REPOSITORY_OWNER: ${{ github.repository_owner }}
+#          GITHUB_REPOSITORY: ${{ github.repository }}
+#          ISSUE_NUMBER: ${{ github.event.issue.number }}
+#        run: |
+#          node index.js
+#
+#      - name: Commit & Push changes
+#        uses: Andro999b/push@v1.3
+#        with:
+#          github_token: ${{ secrets.GITHUB_TOKEN }}
+#          branch: feature/${{ github.event.issue.number }}-gherkin
+#          force: true
+#          message: "test(gherkin): Added Gherkin scenario from issue #${{ github.event.issue.number }}"
+#
+#      - name: Create Pull Request
+#        uses: peter-evans/create-pull-request@v5
+#        with:
+#          branch: feature/${{ github.event.issue.number }}-gherkin
+#          title: "Add Gherkin scenario from issue #${{ github.event.issue.number }}"
+#          body: "This pull request adds a Gherkin scenario extracted from issue #${{ github.event.issue.number }}."
