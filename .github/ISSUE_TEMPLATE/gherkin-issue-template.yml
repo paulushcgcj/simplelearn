@@ -40,9 +40,9 @@ body:
   - type: textarea
     id: gherkin_scenario
     attributes:
-      label: Gherkin Scenario
+      label: Test Scenario
       description: 'Please write or paste your Gherkin scenario here.'
-      render: shell
+      render: gherkin
       placeholder: |        
         Feature: [Feature Name]
           Scenario: [Scenario Name]
@@ -56,8 +56,7 @@ body:
     id: additional_instructions
     attributes:
       label: Additional Instructions
-      description: 'Please provide any additional instructions or custom behavior that doesn’t fit into our predefined instructions.'
-      render: gherkin
+      description: 'Please provide any additional instructions or custom behavior that doesn’t fit into our predefined instructions.'      
       placeholder: |        
         - [Instruction 1] - [Description]
         - [I can choose "rock" as the word] - User can provide a custom word to guess.

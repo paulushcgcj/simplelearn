@@ -32,9 +32,14 @@ console.log(`Formatting content from issue #${issueNumber} in ${owner}/${repo}..
       //TODO: update the github issue title with the newIssueTitle
     }
 
-    // print the issue body
-    console.log(issueBody);
-    
+    // Read the issue body as markdown
+    const md = new MarkdownIt();
+    const parsedIssueBody = md.render(issueBody);
+
+    // Replace the fence token "shell" with "gherkin"
+    const updatedIssueBody = parsedIssueBody.replace(/```shell/g, "```gherkin");
+    //TODO: update the github issue body with the updatedIssueBody
+
 
 
 
