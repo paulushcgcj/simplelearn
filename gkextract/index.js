@@ -9,6 +9,7 @@ const octokit = new Octokit({ auth: process.env.GITHUB_TOKEN });
 const owner = process.env.GITHUB_REPOSITORY_OWNER;
 const repo = process.env.GITHUB_REPOSITORY.split("/")[1];
 const issueNumber = process.env.ISSUE_NUMBER;
+const basePath = process.env.BASE_PATH;
 
 console.log(`Extracting Gherkin content from issue #${issueNumber} in ${owner}/${repo}...`);
 
@@ -21,7 +22,6 @@ console.log(`Extracting Gherkin content from issue #${issueNumber} in ${owner}/$
       issue_number: issueNumber
     });
 
-    const issueTitle = issue.title;
     const issueBody = issue.body;
 
     // Parse the markdown content
@@ -41,11 +41,11 @@ console.log(`Extracting Gherkin content from issue #${issueNumber} in ${owner}/$
       process.exit(1);
     }
 
-    // Sanitize the issue title to create a safe filename
-    const sanitizedTitle = issueTitle.replace('[Test Case]:', '').trim().replace(/[^a-z0-9]+/gi, '-').toLowerCase();
+    // Generate a file name based on the issue number
+    const sanitizedTitle = `upt_${issueNumber}`.toLowerCase();
 
     // Write the Gherkin content to a .feature file
-    const filePath = `../cypress/cypress/e2e/${sanitizedTitle}.feature`;
+    const filePath = `${basePath}/${sanitizedTitle}.feature`;
     writeFileSync(filePath, gherkinText.trim());
 
     console.log(`Gherkin feature file created: ${filePath}`);
