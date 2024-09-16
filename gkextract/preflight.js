@@ -19,7 +19,7 @@ console.log(`Formatting content from issue #${issueNumber} in ${owner}/${repo}..
       issue_number: issueNumber
     });
     
-    if (issue.title !== "[Test Case]: REPLACE WITH YOUR TEST CASE TITLE") {
+    if (issue.title === "[Test Case]: REPLACE WITH YOUR TEST CASE TITLE") {
       
       console.warn('No issue title provided, updating the issue title with the test case title');
 
