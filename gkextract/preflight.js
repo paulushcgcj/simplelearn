@@ -19,12 +19,14 @@ console.log(`Formatting content from issue #${issueNumber} in ${owner}/${repo}..
       issue_number: issueNumber
     });
     
+    let updatedTitle;
+
     if (issue.title === "[Test Case]: REPLACE WITH YOUR TEST CASE TITLE") {
       
       console.warn('No issue title provided, updating the issue title with the test case title');
 
       const authorName = `Automated test case #${issueNumber} opened by ${issue.user?.login || 'unknown'}`;
-      const newIssueTitle = issue.title.replace("REPLACE WITH YOUR TEST CASE TITLE", authorName).trim();
+      updatedTitle = issue.title.replace("REPLACE WITH YOUR TEST CASE TITLE", authorName).trim();
       
       await octokit.issues.update({
         owner,
@@ -33,7 +35,12 @@ console.log(`Formatting content from issue #${issueNumber} in ${owner}/${repo}..
         title: newIssueTitle,
         body: issue.body
       });
+    } else {
+      updatedTitle = issue.title;
     }
+
+    updatedTitle = updatedTitle.replace("[Test Case]: ", "");
+    console.log(`::set-output name=title::${updatedTitle}`);
 
   } catch (error) {
     console.error('Error fetching and/or updating issue data:', error);
