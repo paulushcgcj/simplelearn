@@ -57,6 +57,7 @@ body:
     attributes:
       label: Additional Instructions
       description: 'Please provide any additional instructions or custom behavior that doesn’t fit into our predefined instructions.'      
+      render: shell
       placeholder: |        
         - [Instruction 1] - [Description]
         - [I can choose "rock" as the word] - User can provide a custom word to guess.
