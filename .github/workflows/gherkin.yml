@@ -17,36 +17,14 @@ jobs:
           persist-credentials: false
           fetch-depth: 0
 
-      - name: Setup Node.js
-        uses: actions/setup-node@v3
+      - name: Extract feature content
+        id: feature
+        uses: bcgov-nr/action-gherkin-issue-processor.yml@main
         with:
-          node-version: '18'
+          issue: ${{ github.event.issue.number }}
 
-      - name: Install dependencies        
-        working-directory: gkextract
-        run: npm install
-
-      - name: Run preflight.js
-        id: preflight
-        working-directory: gkextract
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          GITHUB_REPOSITORY_OWNER: ${{ github.repository_owner }}
-          GITHUB_REPOSITORY: ${{ github.repository }}
-          ISSUE_NUMBER: ${{ github.event.issue.number }}
-        run: |
-          node preflight.js
-
-      - name: Run index.js        
-        working-directory: gkextract
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          GITHUB_REPOSITORY_OWNER: ${{ github.repository_owner }}
-          GITHUB_REPOSITORY: ${{ github.repository }}
-          ISSUE_NUMBER: ${{ github.event.issue.number }}
-          BASE_PATH: ${{ github.workspace }}/cypress/cypress/e2e/
-        run: |
-          node index.js
+      - name: Create feature file
+        run: echo "${{ steps.feature.outputs.feature }}" > cypress/cypress/e2e/upt_${{ github.event.issue.number }}.feature
 
       - name: Commit & Push changes
         uses: Andro999b/push@v1.3
