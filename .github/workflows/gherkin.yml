@@ -33,7 +33,7 @@ jobs:
           branch: test/upt_${{ github.event.issue.number }}
           force: true
           message: |
-            test(upt #${{ github.event.issue.number }}): ${{ steps.preflight.outputs.title }}
+            test(upt #${{ github.event.issue.number }}): ${{ steps.feature.outputs.title }}
 
             Closes #${{ github.event.issue.number }}
 
@@ -41,7 +41,7 @@ jobs:
         uses: peter-evans/create-pull-request@v5
         with:
           branch: test/upt_${{ github.event.issue.number }}
-          title: "test(upt #${{ github.event.issue.number }}): ${{ steps.preflight.outputs.title }}"
+          title: "test(upt #${{ github.event.issue.number }}): ${{ steps.feature.outputs.title }}"
           body: |
             ${{ github.event.issue.body }}
 
