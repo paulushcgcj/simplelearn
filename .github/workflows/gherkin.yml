@@ -19,7 +19,7 @@ jobs:
 
       - name: Extract feature content
         id: feature
-        uses: bcgov-nr/action-gherkin-issue-processor.yml@main
+        uses: bcgov-nr/action-gherkin-issue-processor.yml@v0.0.2
         with:
           issue: ${{ github.event.issue.number }}
 
