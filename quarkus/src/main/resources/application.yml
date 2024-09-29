@@ -1,0 +1,16 @@
+quarkus:
+  datasource:
+    db-kind: postgresql
+    username: postgres
+    password: default
+    jdbc:
+      url: jdbc:postgresql://localhost:5432/postgres
+      username: postgres
+      password: default
+    reactive:
+      url: postgresql://localhost:5432/postgres
+      max-size: 20
+  flyway:
+    active: true
+    baseline-on-migrate: true
+    migrate-at-start: true
